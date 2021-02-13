@@ -1,0 +1,447 @@
+{% extends 'mainstat.html' %}
+{% load static %}
+{% load socialaccount %}
+
+{% block title %}
+    SunRails Profile
+{% endblock %}
+
+{% block layout %}
+    {% if user.is_authenticated %}
+        <div class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-dark shadow-sm">
+            <h5 class="my-0 mr-md-auto text-info font-weight-normal">SunRails Metrostroi</h5>
+            <nav class="my-2 my-md-0 mr-md-3">
+                <a class="p-2 text-info" href="#">Роли</a>
+            </nav>
+            <nav class="my-2 my-md-0 mr-md-3">
+                <a class="p-2 text-info" href="https://discord.gg/mXwBHXG">Дискорд</a>
+            </nav>
+            <a class="btn btn-outline-primary" href="/accounts/logout/">Выход</a>
+        </div>
+
+        <div class="card mb-5 mx-auto" style="max-width: 540px;">
+            <div class="row g-0">
+                <div class="col-md-4 mx-auto">
+                    <img src="{{ extend_data.avatar }}"
+                         alt="">
+                </div>
+                <div class="col-md-8">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ extend_data.nick }}</h5>
+                        <p class="card-text"><img class="col-sm-1 mb-1"
+                                                  src="https://yt3.ggpht.com/a/AATXAJwlODWf33e7LoXcdvdqBmStNQHqLFZ2x7-_mX-2qw=s900-c-k-c0xffffffff-no-rj-mo"
+                                                  alt="">
+                            SteamID: {{ extend_data.sid }}<br>
+
+                            <svg xmlns="http://www.w3.org/2000/svg" width="27" height="27" fill="currentColor"
+                                 class="bi bi-exclamation-octagon-fill mb-1" viewBox="0 0 16 16">
+                                <path d="M11.46.146A.5.5 0 0 0 11.107 0H4.893a.5.5 0 0 0-.353.146L.146 4.54A.5.5 0 0 0 0 4.893v6.214a.5.5 0 0 0 .146.353l4.394 4.394a.5.5 0 0 0 .353.146h6.214a.5.5 0 0 0 .353-.146l4.394-4.394a.5.5 0 0 0 .146-.353V4.893a.5.5 0 0 0-.146-.353L11.46.146zM8 4c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 4.995A.905.905 0 0 1 8 4zm.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"></path>
+                            </svg>
+                            Количество нарушений: {{ extend_data.violation }}<br>
+
+                            <svg xmlns="http://www.w3.org/2000/svg" width="27" height="27" fill="currentColor"
+                                 class="bi bi-clock" viewBox="0 0 16 16">
+                                <path d="M8 3.5a.5.5 0 0 0-1 0V9a.5.5 0 0 0 .252.434l3.5 2a.5.5 0 0 0 .496-.868L8 8.71V3.5z"></path>
+                                <path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zm7-8A7 7 0 1 1 1 8a7 7 0 0 1 14 0z"></path>
+                            </svg>
+                            Количество часов: {{ extend_data.all_time }}ч
+                        </p>
+                        <p class="card-text"><small class="text-muted">Первый раз вы
+                            заходили {{ extend_data.first_enter }}</small>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container-fluid mx-auto">
+            <div class="row w-75 mx-auto row-cols-1 row-cols-md-3 g-4 h-75">
+                <div class="col">
+                    <div class="card">
+                        <div class="train_container">
+                            <img class="card-img-top train_img" src="{% static "media/trains/ema502.png" %}"
+                                 alt="">
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title">Ема-502</h5>
+                            <a href="{% url "statistics" %}?train=ema_502&name=Ема-502"><p class="card-text">
+                                Нажмите, чтобы
+                                увидеть
+                                статистику.</p></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card">
+                        <div class="train_container">
+                            <img class="card-img-top train_img" src="{% static "media/trains/81-540.png" %}"
+                                 alt="">
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title">81-540</h5>
+                            <a href="{% url "statistics" %}?train=lvz_540&name=81-540"><p class="card-text">
+                                Нажмите,
+                                чтобы
+                                увидеть
+                                статистику.</p></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card">
+                        <div class="train_container">
+                            <img class="card-img-top train_img" src="{% static "media/trains/81-540_2.png" %}"
+                                 alt="">
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title">81-540.2</h5>
+                            <a href="{% url "statistics" %}?train=lvz_540_2&name=81-540.2"><p class="card-text">
+                                Нажмите, чтобы
+                                увидеть
+                                статистику.</p></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card">
+                        <div class="train_container">
+                            <img class="card-img-top train_img" src="{% static "media/trains/81-540_2k.png" %}"
+                                 alt="">
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title">81-540.2к</h5>
+                            <a href="{% url "statistics" %}?train=lvz_540_2k&name=81-540.2к"><p
+                                    class="card-text">
+                                Нажмите, чтобы
+                                увидеть
+                                статистику.</p></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card">
+                        <div class="train_container">
+                            <img class="card-img-top train_img" src="{% static "media/trains/81-702.png" %}"
+                                 alt="">
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title">81-702</h5>
+                            <a href="{% url "statistics" %}?train=d_702&name=81-702"><p class="card-text">
+                                Нажмите,
+                                чтобы увидеть
+                                статистику.</p></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card">
+                        <div class="train_container">
+                            <img class="card-img-top train_img" src="{% static "media/trains/81-703.png" %}"
+                                 alt="">
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title">81-703</h5>
+                            <a href="{% url "statistics" %}?train=e_703&name=81-703"><p class="card-text">
+                                Нажмите,
+                                чтобы увидеть
+                                статистику.</p></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card">
+                        <div class="train_container">
+                            <img class="card-img-top train_img" src="{% static "media/trains/81-707.png" %}"
+                                 alt="">
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title">81-707</h5>
+                            <a href="{% url "statistics" %}?train=ezh_707&name=81-707"><p class="card-text">
+                                Нажмите,
+                                чтобы
+                                увидеть
+                                статистику.</p></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card">
+                        <div class="train_container">
+                            <img class="card-img-top train_img" src="{% static "media/trains/81-710.png" %}"
+                                 alt="">
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title">81-710</h5>
+                            <a href="{% url "statistics" %}?train=ezh3_710&name=81-710"><p class="card-text">
+                                Нажмите, чтобы
+                                увидеть
+                                статистику.</p></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card">
+                        <div class="train_container">
+                            <img class="card-img-top train_img" src="{% static "media/trains/81-717mvm.png" %}"
+                                 alt="">
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title">81-717 МВМ</h5>
+                            <a href="{% url "statistics" %}?train=msk_717&name=81-717"><p class="card-text">
+                                Нажмите,
+                                чтобы
+                                увидеть
+                                статистику.</p></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card">
+                        <div class="train_container">
+                            <img class="card-img-top train_img" src="{% static "media/trains/81-717lvz.png" %}"
+                                 alt="">
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title">81-717 ЛВЗ</h5>
+                            <a href="{% url "statistics" %}?train=lvz_717&name=81-717 ЛВЗ"><p class="card-text">
+                                Нажмите, чтобы
+                                увидеть
+                                статистику.</p></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card">
+                        <div class="train_container">
+                            <img class="card-img-top train_img" src="{% static "media/trains/81-717_5k.png" %}"
+                                 alt="">
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title">81-717.5к</h5>
+                            <a href="{% url "statistics" %}?train=lvz_717_5k&name=81-717.5к"><p
+                                    class="card-text">
+                                Нажмите, чтобы
+                                увидеть
+                                статистику.</p></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card">
+                        <div class="train_container">
+                            <img class="card-img-top train_img" src="{% static "media/trains/81-717_5а.png" %}"
+                                 alt="">
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title">81-717.5а</h5>
+                            <a href="{% url "statistics" %}?train=msk_717_5a&name=81-717.5а"><p
+                                    class="card-text">
+                                Нажмите, чтобы
+                                увидеть
+                                статистику.</p></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card">
+                        <div class="train_container">
+                            <img class="card-img-top train_img" src="{% static "media/trains/81-717_5m.png" %}"
+                                 alt="">
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title">81-717.5м</h5>
+                            <a href="{% url "statistics" %}?train=msk_717_5m&name=81-717.5м"><p
+                                    class="card-text">
+                                Нажмите, чтобы
+                                увидеть
+                                статистику.</p></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card">
+                        <div class="train_container">
+                            <img class="card-img-top train_img" src="{% static "media/trains/81-717_5p.png" %}"
+                                 alt="">
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title">81-717.5П</h5>
+                            <a href="{% url "statistics" %}?train=lvz_717_5p&name=81-717.5П"><p
+                                    class="card-text">
+                                Нажмите, чтобы
+                                увидеть
+                                статистику.</p></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card">
+                        <div class="train_container">
+                            <img class="card-img-top train_img" src="{% static "media/trains/81-717j.png" %}"
+                                 alt="">
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title">81-717j</h5>
+                            <a href="{% url "statistics" %}?train=j717&name=81-717j"><p class="card-text">
+                                Нажмите,
+                                чтобы увидеть
+                                статистику.</p></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card">
+                        <div class="train_container">
+                            <img class="card-img-top train_img" src="{% static "media/trains/81-718.png" %}"
+                                 alt="">
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title">81-718</h5>
+                            <a href="{% url "statistics" %}?train=tisu_718&name=81-718"><p class="card-text">
+                                Нажмите, чтобы
+                                увидеть
+                                статистику.</p></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card">
+                        <div class="train_container">
+                            <img class="card-img-top train_img" src="{% static "media/trains/81-720.png" %}"
+                                 alt="">
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title">81-720</h5>
+                            <a href="{% url "statistics" %}?train=yauza_720&name=81-720"><p class="card-text">
+                                Нажмите, чтобы
+                                увидеть
+                                статистику.</p></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card">
+                        <div class="train_container">
+                            <img class="card-img-top train_img" src="{% static "media/trains/81-720a.png" %}"
+                                 alt="">
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title">81-720a</h5>
+                            <a href="{% url "statistics" %}?train=yauza_720_a&name=81-720а"><p
+                                    class="card-text">
+                                Нажмите, чтобы
+                                увидеть
+                                статистику.</p></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card">
+                        <div class="train_container">
+                            <img class="card-img-top train_img" src="{% static "media/trains/81-722.png" %}"
+                                 alt="">
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title">81-722</h5>
+                            <a href="{% url "statistics" %}?train=ubik_722&name=81-722"><p class="card-text">
+                                Нажмите, чтобы
+                                увидеть
+                                статистику.</p></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card">
+                        <div class="train_container">
+                            <img class="card-img-top train_img" src="{% static "media/trains/81-722_new.png" %}"
+                                 alt="">
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title">81-722 новые системы</h5>
+                            <a href="{% url "statistics" %}?train=ubik_722_new&name=81-722 НС"><p
+                                    class="card-text">
+                                Нажмите, чтобы
+                                увидеть
+                                статистику.</p></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card">
+                        <div class="train_container">
+                            <img class="card-img-top train_img" src="{% static "media/trains/81-722_1.png" %}"
+                                 alt="">
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title">81-722.1</h5>
+                            <a href="{% url "statistics" %}?train=ubik_722_1&name=81-722.1"><p
+                                    class="card-text">
+                                Нажмите, чтобы
+                                увидеть
+                                статистику.</p></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card">
+                        <div class="train_container">
+                            <img class="card-img-top train_img" src="{% static "media/trains/81-722_3.png" %}"
+                                 alt="">
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title">81-722.3</h5>
+                            <a href="{% url "statistics" %}?train=ubik_722_3&name=81-722.3"><p
+                                    class="card-text">
+                                Нажмите, чтобы
+                                увидеть
+                                статистику.</p></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card">
+                        <div class="train_container">
+                            <img class="card-img-top train_img" src="{% static "media/trains/81-760.png" %}"
+                                 alt="">
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title">81-760</h5>
+                            <a href="{% url "statistics" %}?train=oka_760&name=81-760"><p class="card-text">
+                                Нажмите,
+                                чтобы
+                                увидеть
+                                статистику.</p></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card">
+                        <div class="train_container">
+                            <img class="card-img-top train_img" src="{% static "media/trains/81-760a.png" %}"
+                                 alt="">
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title">81-760А</h5>
+                            <a href="{% url "statistics" %}?train=oka_760a&name=81-760А"><p class="card-text">
+                                Нажмите, чтобы
+                                увидеть
+                                статистику.</p></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% else %}
+        <div style="margin: 0 auto; position: absolute;">
+            <div class="card text-center" style="width: 18rem;">
+                <div class="card-body">
+                    <h5 class="card-title">Войдите, чтобы посмотреть информацию</h5>
+                    <p class="card-text">После того как вы произведете вход в аккаунт Steam, вам станет доступно больше
+                        функций статистики и прочей лабудени.</p>
+                    <a href="{% provider_login_url 'openid' openid='https://steamcommunity.com/openid' %}"
+                       class="btn btn-primary">Войти</a>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+
+{% endblock %}

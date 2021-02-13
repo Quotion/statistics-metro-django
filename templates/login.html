@@ -1,0 +1,74 @@
+{% extends 'mainstat.html' %}
+{% load static %}
+{% load socialaccount %}
+
+{% block title %}
+    SunRails Login
+{% endblock %}
+
+{% block layout %}
+    {% if user.is_authenticated %}
+        <body class="d-flex h-100 text-center text-white bg-dark">
+
+        <div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column">
+            <header class="mb-auto">
+                <div>
+                    <h3 class="float-md-start mb-0">Metrostroi SunRails</h3>
+                </div>
+            </header>
+
+            <main class="px-3">
+                <h1>Оцени свою игру сам.</h1>
+                <p class="lead">Статистика это очень удобный и простой способ отслеживания
+                    вашей игры на нашем сервере.<br> Мы собираем минимальную информацию о Вас - только то,
+                    сколько вы играете за тем или иным составом, а также общее время игры на обоих серверах
+                    сразу.</p>
+                <p class="lead">
+                    <a href="{% url "general" %}" class="btn btn-lg btn-secondary fw-bold border-white bg-black">
+                        Продолжить</a>
+                </p>
+            </main>
+
+            <footer class="mt-auto text-white-50">
+                <p>Сайт принадлежит <a
+                        href="https://forum.gorails.org/topic/309-metrostroi-sunrails-metropolitan-server/"
+                        class="text-white">SunRails</a>, by
+                    <strong>Rise#3047</strong>.</p>
+            </footer>
+        </div>
+
+
+        </body>
+        <iframe src="https://discord.com/widget?id=580768441279971338&theme=dark" width="350" height="500"
+                allowtransparency="true" frameborder="0"
+                sandbox="allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts">
+        </iframe>
+    {% else %}
+        <div class="login-wrap">
+            <div class="login-html">
+                <input id="tab-1" type="radio" name="tab" class="sign-in" checked><label for="tab-1" class="tab">Войдите
+                через Steam</label>
+                <input id="tab-2" type="radio" name="tab" class="sign-up"><label for="tab-2" class="tab"></label>
+                <div class="login-form">
+                    <div class="sign-in-htm">
+                        <div class="group">
+                            <br> {{ user.username }}
+                            <label class="label">Статистика это очень удобный и простой способ отслеживания
+                                вашей игры на нашем сервере. Мы собираем минимальную информацию о Вас - только то,
+                                сколько вы играете за тем или иным составом, а также общее время игры на обоих серверах
+                                сразу.</label>
+                            <br> <br>
+                        </div>
+                        <div class="group">
+                            <a href="{% provider_login_url 'openid' openid='https://steamcommunity.com/openid' %}"
+                               class="button">Вход Steam</a>
+                        </div>
+                        <div class="hr"></div>
+                        <div class="foot-lnk">SunRails Metrostroi</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+
+{% endblock %}

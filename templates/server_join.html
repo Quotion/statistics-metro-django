@@ -1,0 +1,44 @@
+{% extends 'mainstat.html' %}
+{% load static %}
+{% load socialaccount %}
+
+{% block title %}
+    SunRails Login
+{% endblock %}
+
+{% block layout %}
+
+    <body class="d-flex h-100 text-center text-white bg-dark">
+
+    <div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column">
+        <header class="mb-auto">
+            <div>
+                <h3 class="float-md-start mb-0">Metrostroi SunRails</h3>
+            </div>
+        </header>
+
+        <main class="px-3">
+            <h1>Оцени свою игру сам.</h1>
+            <p class="lead">К сожалению Ваша статистика не может быть загружена.<br> <br>Почему?<br>
+                1. <strong>Вы не играли на нашем сервере.</strong><br>Чего же вы ждете? Присоединяйся прямо сейчас!
+                <br><br>
+                2. <strong>Произошла какая-то системная ошибка, из-за который вы не можете посмотреть свою
+                    статистику.</strong><br>
+                Пожалуйста сообщите об этом разработчику сайта SunRails Metrostroi в Discord!<br>
+            </p>
+            <p class="lead">
+                <a href="https://discord.gg/mXwBHXG" class="btn btn-lg btn-secondary fw-bold border-white bg-black">
+                    Discord</a>
+            </p>
+        </main>
+
+        <footer class="mt-auto text-white-50">
+            <p>Сайт принадлежит <a href="https://forum.gorails.org/topic/309-metrostroi-sunrails-metropolitan-server/"
+                                   class="text-white">SunRails</a>, by
+                <strong>Rise#3047</strong>.</p>
+        </footer>
+    </div>
+
+
+    </body>
+{% endblock %}

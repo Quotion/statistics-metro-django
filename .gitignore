@@ -1,0 +1,15 @@
+__pycache__/
+.idea/
+
+mainstat/__pycache__/
+mainstat/migrations/
+
+static/
+
+statisticsDJ/__pycache__/
+statisticsDJ/__init__.py
+statisticsDJ/settings.py
+
+venv/
+
+requirements.txt

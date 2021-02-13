@@ -1,0 +1,171 @@
+{% extends 'mainstat.html' %}
+{% load static %}
+{% load socialaccount %}
+
+{% block title %}
+    SunRails Statistics
+{% endblock %}
+
+{% block layout %}
+
+    <div class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-dark shadow-sm">
+        <h5 class="my-0 mr-md-auto text-info font-weight-normal">SunRails Metrostroi</h5>
+        <nav class="my-2 my-md-0 mr-md-3">
+            <a class="p-2 text-info" href="#">Роли</a>
+        </nav>
+        <a class="btn btn-outline-primary" href="/account/logout/">Выход</a>
+    </div>
+
+    <div class="col-lg-1 w-25">
+        <div class="container" style="margin-left: 3rem !important; position: fixed">
+            <a href="{% url "general" %}">
+                <p class="link-dark fa-underline">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                         class="bi bi-arrow-bar-left" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd"
+                              d="M12.5 15a.5.5 0 0 1-.5-.5v-13a.5.5 0 0 1 1 0v13a.5.5 0 0 1-.5.5zM10 8a.5.5 0 0 1-.5.5H3.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L3.707 7.5H9.5a.5.5 0 0 1 .5.5z"></path>
+                    </svg>
+                    Вернуться
+                </p>
+            </a>
+        </div>
+    </div>
+    <script>
+        jQuery(function ($) {
+            var fctx = document.getElementById('first_plot').getContext('2d');
+            var fchart = new Chart(fctx, {
+                // The type of chart we want to create
+                type: 'line',
+
+                // The data for our dataset
+                data: {
+                    labels: {{ dates|safe }},
+                    datasets: [{
+                        label: '{{ label }}',
+                        data: {{ values }},
+                        backgroundColor: 'rgba(96,181,239, 0.5)',
+                        borderColor: 'rgba(255,255,255, 0.9)',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    legend: {
+                        position: 'top',
+                        fontColor: 'black',
+                    },
+                    scales: {
+                        xAxes: [{
+                            display: true,
+                            scaleLabel: {
+                                display: true,
+                                labelString: 'Даты',
+                                fontColor: 'black'
+                            }
+                        }],
+                        yAxes: [{
+                            display: true,
+                            scaleLabel: {
+                                display: true,
+                                labelString: 'Время в сек.',
+                                fontColor: 'black'
+                            }
+                        }]
+                    },
+                    title: {
+                        display: true,
+                        text: 'Линейный график',
+                        fontColor: 'black',
+                    }
+                }
+            });
+
+            var sctx = document.getElementById('second_plot').getContext('2d');
+            var schart = new Chart(sctx, {
+                // The type of chart we want to create
+                type: 'bar',
+
+                // The data for our dataset
+                data: {
+                    labels: {{ dates|safe }},
+                    datasets: [{
+                        label: 'Разница в %',
+                        backgroundColor: 'rgba(96,181,239, 0.5)',
+                        borderColor: 'rgba(255,255,255, 0.9)',
+                        borderWidth: 1,
+                        data: {{ percent_values }}
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    legend: {
+                        position: 'top',
+                    },
+                    scales: {
+                        xAxes: [{
+                            display: true,
+                            scaleLabel: {
+                                display: true,
+                                labelString: 'Даты',
+                                fontColor: 'black'
+                            }
+                        }],
+                        yAxes: [{
+                            display: true,
+                            scaleLabel: {
+                                display: true,
+                                labelString: 'Проценты (%)',
+                                fontColor: 'black'
+                            }
+                        }]
+                    },
+                    title: {
+                        display: true,
+                        text: 'Соотношение предыдущего дня к следующему в %',
+                        fontColor: 'black'
+                    }
+                }
+            });
+        });
+    </script>
+    <div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column">
+        {% if play_time != 0 %}
+            <h1 class="display-1 mx-auto">Статистика по {{ train_name }}</h1>
+            <br><br><br>
+            <div class="p-3 mb-2 mx-auto w-50 bg-dark text-white shadow-lg text-center mb-5">
+                Первый график показывает статистику за последние 20 дней вашей
+                игры.
+                <br>
+                Второй показывает разницу между предыдущем и следующим днями игры на этом составе.
+                <br><br>
+                Как можно заметить,
+                <mark>{{ comment|safe }}</mark>
+                <br>Общее время игры в этом поезде составило приблизительно
+                <mark>{{ hours }}</mark>
+            </div>
+            <div class="container shadow-lg mb-5"
+                 style="width: 75%; background-color: rgba(38, 141, 0, 0.5); border-radius: 10px">
+                <canvas id="first_plot"></canvas>
+            </div>
+            <div class="container shadow-lg mb-5"
+                 style="width: 75%; background-color: rgba(38,141,0,0.5); border-radius: 10px">
+                <canvas id="second_plot"></canvas>
+            </div>
+        {% else %}
+            <h1 class="display-1 mx-auto">Упс</h1>
+            <br>
+            <div class="p-3 mb-2 mx-auto w-50 bg-dark text-white shadow-lg text-center mb-5">К сожаление общее время
+                вашей игры на данном
+                поезде составило 0ч.<br>Из-за этого загрузить статистику невозможно, поэтому вернитесь на главную
+                страницу и
+                попробуйте выбрать другой состав.
+                <br><a class="cancel-link" href="{% url "general" %}">В меню с составами.</a>
+            </div>
+        {% endif %}
+        <footer class="mx-auto text-white-50 mb-3">
+            <p>Сайт принадлежит <a href="https://forum.gorails.org/topic/309-metrostroi-sunrails-metropolitan-server/"
+                                   class="text-white">SunRails</a>, by
+                <strong>Rise#3047</strong>.</p>
+        </footer>
+    </div>
+{% endblock %}
